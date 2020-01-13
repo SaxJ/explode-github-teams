@@ -9,7 +9,10 @@ export = (app: Application) => {
         team_id: teamId
       })
       membersResp.then((response) => {
-        const members = response.data.map((m) => m.login).filter((item) => item !== context.payload.pull_request.user.login)
+        const members = response.data.map((m) => m.login)
+          .filter((item) => item !== context.payload.pull_request.user.login)
+          .sort((a, b) => 0.5 - Math.random())
+
         context.github.pulls.createReviewRequest({
           reviewers: members,
           pull_number: context.payload.pull_request.number,
