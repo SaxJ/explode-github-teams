@@ -1,6 +1,6 @@
 # explode-git-group
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that Takes assigned reviewer groups and assigns each person in that group individually to a PR
+> A GitHub App built with takes assigned reviewer groups and assigns each person in that group individually to a PR
 
 ## Setup
 

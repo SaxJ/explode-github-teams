@@ -1,0 +1,38 @@
+{
+    "event": "pull_request",
+    "payload": {
+        "action": "review_requested",
+        "number": 165,
+        "pull_request": {
+            "id": 361960567,
+            "number": 165,
+            "state": "open",
+            "locked": false,
+            "title": "Testing Github Bot",
+            "user": {
+                "login": "SaxJ",
+                "id": 1234,
+                "type": "User",
+                "site_admin": false
+            },
+            "body": "",
+            "created_at": "2020-01-13T06:53:23Z",
+            "updated_at": "2020-01-13T08:03:35Z",
+            "closed_at": null,
+            "merged_at": null,
+            "assignee": null,
+            "assignees": [],
+            "requested_reviewers": [
+                {
+                    "login": "my-zone",
+                    "id": 4321,
+                    "type": "User",
+                    "site_admin": false
+                }
+            ],
+            "requested_teams": [],
+            "labels": [],
+            "milestone": null
+        }
+    }
+}
