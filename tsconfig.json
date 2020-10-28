@@ -1,22 +1,23 @@
 {
   "compilerOptions": {
     "allowJs": false,
-    "lib": ["es2015", "es2017"],
+    "declaration": true,
+    "downlevelIteration": true,
+    "esModuleInterop": true,
+    "lib": ["es2015", "es2019"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
-    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": false,
-    "pretty": true,
-    "strict": true,
-    "sourceMap": true,
-    "outDir": "./lib",
-    "skipLibCheck": true,
     "noImplicitAny": true,
-    "esModuleInterop": true,
-    "declaration": true,
-    "resolveJsonModule": true
+    "noImplicitReturns": true,
+    "noUnusedLocals": false,
+    "outDir": "./lib",
+    "pretty": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "target": "ES2019"
   },
   "include": [
     "src/**/*"
