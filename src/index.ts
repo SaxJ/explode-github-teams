@@ -29,14 +29,14 @@ export = (app: Application) => {
       await github.pulls.deleteReviewRequest({
         team_reviewers: pr.requested_teams.map((team) => team.slug),
         pull_number: pr.number,
-        ...repo()
+        ...context.repo()
       })
 
       /** Add the members explicitly */
       await github.pulls.createReviewRequest({
         reviewers: membersToAdd,
         pull_number: pr.number,
-        ...repo()
+        ...context.repo()
       })
     } catch (error) {
       log.error('Failure!', error)
