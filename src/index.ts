@@ -28,6 +28,7 @@ export = (app: Application) => {
       /** Remove the teams */
       await github.pulls.deleteReviewRequest({
         team_reviewers: pr.requested_teams.map((team) => team.slug),
+        reviewers: [],
         pull_number: pr.number,
         ...context.repo()
       })
