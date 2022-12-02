@@ -1,6 +1,6 @@
 {
   "name": "explode-git-group",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "description": "Takes assigned reviewer groups and assigns each person in that group individually to a PR",
   "author": "Saxon Jensen <saxon.jensen@gmail.com>",
@@ -16,13 +16,13 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "dev": "nodemon --exec \"npm start\"",
-    "start": "probot run ./lib/index.js",
+    "start": "probot run ./lib/app.js",
     "lint": "standard **/*.ts --fix",
     "test": "jest && standard **/*.ts",
     "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
-    "probot": "^9.5.3"
+    "probot": "^12.2.8"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
