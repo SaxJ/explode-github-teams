@@ -1,20 +1,25 @@
-import { Application } from 'probot' // eslint-disable-line no-unused-vars
+import { Probot } from 'probot' // eslint-disable-line no-unused-vars
 
-export = (app: Application) => {
+export = (app: Probot) => {
   app.on('pull_request.review_requested', async (context) => {
-    const { payload, github, repo, log } = context
-    const pr = payload.pull_request
+    const { payload, octokit, log  } = context;
+    const pr = payload.pull_request;
+    const [orgName, ] = payload.repository.name.split('/');
+
 
     try {
-      const teamIds: number[] = pr.requested_teams.map((team) => team.id)
+      const teamSlugs = pr.requested_teams.map(team => team.slug);
 
       /** If no teams have been added, there is nothing for us to do */
-      if (teamIds.length === 0) return
+      if (teamSlugs.length === 0) return
 
-      /** Member responses for each team */
+      /** Members for each team */
       const teamLists = await Promise.all(
-        teamIds.map(async (id) => github.teams.listMembers({ team_id: id }))
-      )
+        teamSlugs.map(async (slug) => octokit.teams.listMembersInOrg({
+          org: orgName,
+          team_slug: slug,
+        }))
+      );
 
       /** a flat, randomized list of member logins to add, excluding the owner */
       const membersToAdd = uniqueValues(
@@ -26,18 +31,16 @@ export = (app: Application) => {
       ).sort(randomize)
 
       /** Remove the teams */
-      await github.pulls.deleteReviewRequest({
-        team_reviewers: pr.requested_teams.map((team) => team.slug),
+      await octokit.pulls.removeRequestedReviewers({
+        ...context.pullRequest(),
         reviewers: [],
-        pull_number: pr.number,
-        ...context.repo()
-      })
+        team_reviewers: pr.requested_teams.map(team => team.slug),
+      });
 
       /** Add the members explicitly */
-      await github.pulls.createReviewRequest({
+      await octokit.pulls.requestReviewers({
+        ...context.pullRequest(),
         reviewers: membersToAdd,
-        pull_number: pr.number,
-        ...context.repo()
       })
     } catch (error) {
       log.error('Failure!', error)
