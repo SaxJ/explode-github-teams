@@ -4,7 +4,7 @@ export = (app: Probot) => {
   app.on('pull_request.review_requested', async (context) => {
     const { payload, octokit, log  } = context;
     const pr = payload.pull_request;
-    const orgName = payload.repository.organization ?? null;
+    const orgName = payload.organization?.login ?? null;
     log.error('ORG:' + JSON.stringify(payload));
 
 
