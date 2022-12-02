@@ -5,6 +5,7 @@ export = (app: Probot) => {
     const { payload, octokit, log  } = context;
     const pr = payload.pull_request;
     const [orgName, ] = payload.repository.name.split('/');
+    log.info('ORG:' + JSON.stringify(orgName));
 
 
     try {
@@ -20,6 +21,7 @@ export = (app: Probot) => {
           team_slug: slug,
         }))
       );
+      log.info(JSON.stringify(teamLists));
 
       /** a flat, randomized list of member logins to add, excluding the owner */
       const membersToAdd = uniqueValues(
@@ -30,6 +32,8 @@ export = (app: Probot) => {
           .filter((login) => login !== pr.user.login)
       ).sort(randomize)
 
+      log.info(JSON.stringify(membersToAdd));
+
       /** Remove the teams */
       await octokit.pulls.removeRequestedReviewers({
         ...context.pullRequest(),
@@ -37,11 +41,15 @@ export = (app: Probot) => {
         team_reviewers: pr.requested_teams.map(team => team.slug),
       });
 
+      log.info('Removed old');
+
       /** Add the members explicitly */
       await octokit.pulls.requestReviewers({
         ...context.pullRequest(),
         reviewers: membersToAdd,
-      })
+      });
+
+      log.info('Added members')
     } catch (error) {
       log.error('Failure!', error)
     }
