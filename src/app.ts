@@ -4,7 +4,7 @@ export = (app: Probot) => {
   app.on('pull_request.review_requested', async (context) => {
     const { payload, octokit, log  } = context;
     const pr = payload.pull_request;
-    const [orgName, ] = payload.repository.name.split('/');
+    const orgName = payload.repository.organization ?? null;
     log.error('ORG:' + JSON.stringify(orgName));
 
 
@@ -13,7 +13,7 @@ export = (app: Probot) => {
       log.error(JSON.stringify(teamSlugs));
 
       /** If no teams have been added, there is nothing for us to do */
-      if (teamSlugs.length === 0) return
+      if (teamSlugs.length === 0 || orgName === null) return
 
       /** Members for each team */
       const teamLists = await Promise.all(
