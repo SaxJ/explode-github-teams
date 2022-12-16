@@ -1,18 +1,20 @@
-# explode-git-group
+# Github Explode Bot
 
-> A GitHub App built with [Probot](https://github.com/probot/probot) that Takes assigned reviewer groups and assigns each person in that group individually to a PR
+Sick of adding a team to a review in Github, then everybody being removed from the PR when once person reviews?
+
+Well be sick no more! Explode Bot individually adds each member of a team to a github PR.
 
 ## Setup
 
 ```sh
 # Install dependencies
-npm install
+yarn install
 
 # Run typescript
-npm run build
+yarn run build
 
 # Run the bot
-npm start
+yarn start
 ```
 
 ## Contributing
