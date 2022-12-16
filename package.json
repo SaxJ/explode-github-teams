@@ -14,8 +14,8 @@
     "probot-app"
   ],
   "scripts": {
-    "start": "probot run ./dist/app.js",
     "build": "tsc",
+    "start": "probot run ./dist/app.js",
     "test": "ts-node ./test/app.test.ts"
   },
   "dependencies": {
