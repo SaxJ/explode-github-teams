@@ -22,7 +22,7 @@
     "probot": "^12.3.3"
   },
   "devDependencies": {
-    "@octokit/webhooks": "^10.1.5",
+    "@octokit/webhooks": "^10.9.2",
     "@types/pino-std-serializers": "^4.0.0",
     "nock": "^13.2.9",
     "smee-client": "^1.2.3",
