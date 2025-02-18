@@ -19,7 +19,7 @@
     "test": "ts-node ./test/app.test.ts"
   },
   "dependencies": {
-    "probot": "^12.2.8"
+    "probot": "^12.3.3"
   },
   "devDependencies": {
     "@octokit/webhooks": "^10.1.5",
