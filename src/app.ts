@@ -1,11 +1,24 @@
 import { Probot } from 'probot' // eslint-disable-line no-unused-vars
 
+interface ExplodeConfig {
+  max_reviewers: number;
+}
+
 export = (app: Probot) => {
   app.on('pull_request.review_requested', async (context) => {
-    const { payload, octokit, log  } = context;
+    const { payload, octokit, log } = context;
     const pr = payload.pull_request;
     const orgName = payload.organization?.login ?? null;
 
+    let explodeConfig: ExplodeConfig | null = null;
+
+    try {
+      explodeConfig = await context.config('explode.yml', {
+        max_reviewers: 20
+      });
+    } catch (error) {
+      log.error('Failed to read config', error);
+    }
 
     try {
       const teamSlugs = pr.requested_teams.map(team => team.slug);
@@ -28,7 +41,7 @@ export = (app: Probot) => {
           .flat()
           .map((member) => member.login)
           .filter((login) => login !== pr.user.login)
-      ).sort(randomize)
+      ).sort(randomize).slice(0, explodeConfig?.max_reviewers);
 
       /** Remove the teams */
       await octokit.pulls.removeRequestedReviewers({
