@@ -1,6 +1,6 @@
 import { Probot } from "probot"; // eslint-disable-line no-unused-vars
 
-const BLACKLIST_PATTERNS = ["ai.*review"];
+const BLACKLIST_PATTERNS = ["ai.*review.*"];
 
 export = (app: Probot) => {
   app.on("pull_request.review_requested", async (context) => {
