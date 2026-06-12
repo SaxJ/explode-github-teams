@@ -18,7 +18,12 @@ export = (app: Probot) => {
       );
 
       /** If no teams have been added, there is nothing for us to do */
-      if (teamSlugs.length === 0 || orgName === null) return;
+      if (teamSlugs.length === 0 || orgName === null) {
+        app.log.info("Skipped since no teams added", {
+          requestedTeams: pr.requested_teams.map((t) => t.slug),
+        });
+        return;
+      }
 
       /** Members for each team */
       const teamLists = await Promise.all(
@@ -44,6 +49,10 @@ export = (app: Probot) => {
         ...context.pullRequest(),
         reviewers: [],
         team_reviewers: pr.requested_teams.map((team) => team.slug),
+      });
+      app.log.info("Removed teams from review", {
+        teams: pr.requested_teams.map((t) => t.slug),
+        pr: pr.url,
       });
 
       /** Add the members explicitly */
