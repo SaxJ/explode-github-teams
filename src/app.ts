@@ -39,7 +39,7 @@ export = (app: Probot) => {
           .filter((login) => login !== pr.user.login),
       ).sort(randomize);
 
-      // skip if no team members to explode
+      /** Skip if no team members to explode */
       if (membersToAdd.length === 0) {
         return;
       }
