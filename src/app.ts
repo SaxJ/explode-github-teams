@@ -1,6 +1,6 @@
 import { Probot } from "probot"; // eslint-disable-line no-unused-vars
 
-const BLACKLIST_PATTERNS = ["ai.*review.*", ".*auggie.*"];
+const BLACKLIST_PATTERNS = [".*ai.*review.*", ".*auggie.*"];
 
 export = (app: Probot) => {
   app.on("pull_request.review_requested", async (context) => {
@@ -12,7 +12,7 @@ export = (app: Probot) => {
       let teamSlugs = pr.requested_teams.map((team) => team.slug);
 
       /** Check blacklist of team names, filter out blacklisted team names */
-      teamSlugs.filter(
+      teamSlugs = teamSlugs.filter(
         (slug) =>
           !BLACKLIST_PATTERNS.some((pattern) => Boolean(slug.match(pattern))),
       );
