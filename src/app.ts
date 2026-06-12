@@ -39,11 +39,8 @@ export = (app: Probot) => {
           .filter((login) => login !== pr.user.login),
       ).sort(randomize);
 
-      /** If the team(s) have no members, there is nobody to explode to.
-       * Abort before removing the team reviewers, otherwise the PR would be
-       * left with no requested reviewers at all. */
+      // skip if no team members to explode
       if (membersToAdd.length === 0) {
-        log.info("No team members to add, aborting explosion");
         return;
       }
 
