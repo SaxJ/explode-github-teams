@@ -12,7 +12,7 @@ export = (app: Probot) => {
       let teamSlugs = pr.requested_teams.map((team) => team.slug);
 
       /** Check blacklist of team names, filter out blacklisted team names */
-      teamSlugs.filter(
+      teamSlugs = teamSlugs.filter(
         (slug) =>
           !BLACKLIST_PATTERNS.some((pattern) => Boolean(slug.match(pattern))),
       );
